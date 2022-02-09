@@ -42,34 +42,34 @@ class AsyncInitializerA1 : AsyncInitializer() {
     override fun dependencies(): List<Class<out Initializer>> = listOf(InitializerA::class.java)
 }
 
-class LazyAsyncInitializerA2 : AsyncInitializer() {
-    // Lazy init, allow to finish initialization after first frame.
-    override val isLazy: Boolean = true
+class LateAsyncInitializerA2 : AsyncInitializer() {
+    // Late init, allow to finish initialization after first frame.
+    override val isLate: Boolean = true
 
     override fun init(context: Context, notifier: AsyncNotifier) {
         // Run on worker thread.
-        println("Lazy init async A2 start.")
+        println("Late init async A2 start.")
         thread {
             Thread.sleep(5000)
             notifier.finish()
-            println("Lazy init async A2 finished.")
+            println("Late init async A2 finished.")
         }
-        println("Lazy init async A2 wait...")
+        println("Late init async A2 wait...")
     }
 
     override fun dependencies(): List<Class<out Initializer>> = listOf(InitializerA::class.java)
 }
 
-class LazyInitializerB : Initializer() {
-    // Lazy init, allow to finish initialization after first frame.
-    override val isLazy: Boolean = true
+class LateInitializerB : Initializer() {
+    // Late init, allow to finish initialization after first frame.
+    override val isLate: Boolean = true
 
     override fun init(context: Context) {
-        println("Lazy init B finished.")
+        println("Late init B finished.")
     }
 
     override fun dependencies(): List<Class<out Initializer>> = listOf(
         AsyncInitializerA1::class.java,
-        LazyAsyncInitializerA2::class.java,
+        LateAsyncInitializerA2::class.java,
     )
 }

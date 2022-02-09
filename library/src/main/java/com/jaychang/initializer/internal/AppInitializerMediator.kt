@@ -21,7 +21,7 @@ import com.jaychang.initializer.InitializationListener
 import com.jaychang.initializer.Initializer
 
 /**
- * Coordinates the
+ * Coordinates the initialization process.
  * */
 @Suppress("LongParameterList")
 internal class AppInitializerMediator(

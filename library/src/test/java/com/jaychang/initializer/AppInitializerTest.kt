@@ -234,16 +234,16 @@ class AppInitializerTest {
     }
 
     /**
-     *     A(lazy)  B(depends on A)
+     *     A(late)  B(depends on A)
      * */
     @Test
-    fun `sync should not depend on sync lazy`() {
+    fun `sync should not depend on sync late`() {
         val appInitializer = AppInitializer.Builder(appContext).build()
         class _A : TestInitializer()
         class _B : TestInitializer()
         val A = spyk(_A())
         val B = spyk(_B())
-        A.isLazy = true
+        A.isLate = true
         B.dependencies = listOf(A)
 
         assertThrows<IllegalStateException> {
@@ -276,7 +276,7 @@ class AppInitializerTest {
     private open class TestInitializer(
         var dependencies: List<Initializer> = emptyList(),
         var initBlock: (() -> Unit)? = null,
-        override var isLazy: Boolean = false
+        override var isLate: Boolean = false
     ) : Initializer() {
         override fun init(context: Context) {
             initBlock?.invoke()
@@ -290,7 +290,7 @@ class AppInitializerTest {
     private open class AsyncTestInitializer(
         var dependencies: List<Initializer> = emptyList(),
         var initBlock: (() -> Unit)? = null,
-        override var isLazy: Boolean = false
+        override var isLate: Boolean = false
     ) : AsyncInitializer() {
         override fun init(context: Context) {
             initBlock?.invoke()

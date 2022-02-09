@@ -24,7 +24,7 @@ import java.util.*
  * Directed acyclic graph links all the [Initializer]s to form before/after relationships.
  *
  * Validations are performed against the graph:
- * - No sync initializer can depend on sync-lazy initializer(s).
+ * - No sync initializer can depend on sync-late initializer(s).
  * - Circular dependencies.
  * */
 internal class AppInitializerGraph(initializers: List<Initializer>) {
@@ -75,17 +75,17 @@ internal class AppInitializerGraph(initializers: List<Initializer>) {
     }
 
     private fun validateGraph() {
-        traversal(root) { it.checkSyncDependOnSyncLazy() }
+        traversal(root) { it.checkSyncDependOnSyncLate() }
     }
 
-    // Sync initializer can't depend on Sync-lazy initializers because we must wait for
-    // all sync initializers to be finished before executing sync-lazy ones.
-    private fun Initializer.checkSyncDependOnSyncLazy() {
+    // Sync initializer can't depend on Sync-late initializers because we must wait for
+    // all sync initializers to be finished before executing sync-late ones.
+    private fun Initializer.checkSyncDependOnSyncLate() {
         if (!isAsync) {
             for (before in beforeInitializers) {
-                val hasSyncLazyDependencies = !before.isAsync && before.isLazy
-                if (hasSyncLazyDependencies) {
-                    val error = "Sync initializer (${javaClass.simpleName}) can't depend on Sync-lazy initializer (${before.javaClass.simpleName})"
+                val hasSyncLateDependencies = !before.isAsync && before.isLate
+                if (hasSyncLateDependencies) {
+                    val error = "Sync initializer (${javaClass.simpleName}) can't depend on Sync-late initializer (${before.javaClass.simpleName})"
                     throw IllegalStateException(error)
                 }
             }

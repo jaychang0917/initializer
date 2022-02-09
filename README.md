@@ -1,5 +1,5 @@
 An initialization tasks manager for Android. It performs all initialization tasks in defined order.
-Also, it supports lazy and async initialization.
+Also, it supports late and async initialization.
 
 # Download
 Initializer is available on `mavenCentral()`.
@@ -27,8 +27,8 @@ class InitializerB : Initializer() {
 } 
 
 class InitializerC : AsyncInitializer() { 
-    // Lazy init, allow to finish initialization after first frame. Default false.
-    override val isLazy: Boolean = true
+    // Late init, allow to finish initialization after first frame. Default false.
+    override val isLate: Boolean = true
     
     // Async init, perform initialization on worker thread. Default false.
     override val isAsync: Boolean = true

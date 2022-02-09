@@ -29,13 +29,13 @@ abstract class Initializer : Runnable {
     internal val afterInitializers = mutableListOf<Initializer>()
 
     /**
-     * A lazy initializer doesn't need to be finished before the app's first frame.
+     * A late initializer doesn't need to be finished before the app's first frame.
      *
-     * The [AppInitializer] will wait for all non-lazy initializers to be finished.
+     * The [AppInitializer] will wait for all non-late initializers to be finished.
      *
      * Default `false`.
      * */
-    open val isLazy: Boolean = false
+    open val isLate: Boolean = false
 
     /**
      * Initializes with the given application [Context].

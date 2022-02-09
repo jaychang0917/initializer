@@ -46,7 +46,7 @@ class AppInitializer private constructor(
         if (initializers.isEmpty()) return
 
         val graph = AppInitializerGraph(initializers)
-        val waiters = graph.vertexes.filter { !it.isLazy }
+        val waiters = graph.vertexes.filter { !it.isLate }
         val latch = AppInitializerLatch(waiters)
         mediator = AppInitializerMediator(
             appContext = appContext,

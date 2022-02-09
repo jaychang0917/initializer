@@ -26,8 +26,8 @@ class App : Application() {
         super.onCreate()
         println("App onCreate")
 
-        // InitializerA -> AsyncInitializerA1 / LazyAsyncInitializerA2 -> LazyInitializerB
-        val initializers = listOf(InitializerA(), LazyAsyncInitializerA2(), LazyInitializerB(), AsyncInitializerA1())
+        // InitializerA -> AsyncInitializerA1 / LateAsyncInitializerA2 -> LateInitializerB
+        val initializers = listOf(InitializerA(), LateAsyncInitializerA2(), LateInitializerB(), AsyncInitializerA1())
         val appInitializer = AppInitializer.Builder(this)
             .addListener(object : InitializationListener {
                 override fun beforeAll() {

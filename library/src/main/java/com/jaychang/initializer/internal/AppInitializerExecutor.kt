@@ -28,7 +28,7 @@ internal class AppInitializerExecutor(initializers: List<Initializer>) {
         if (task.isAsync) {
             threadPool.submit(task)
         } else {
-            if (task.isLazy) {
+            if (task.isLate) {
                 mainHandler.post(task)
             } else {
                 task.run()
